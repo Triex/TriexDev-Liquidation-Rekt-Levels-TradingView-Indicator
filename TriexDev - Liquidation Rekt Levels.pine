@@ -1,0 +1,80 @@
+//@version=5
+indicator('TriexDev - Liquidation Rekt Levels', overlay=true)
+
+// A basic indicator which lets you see where positions will be liquidated. Each line is based on default leverage levels typically used for trading.
+// Later updates: Look at adding toggles for each level efficiently, potential custom leverage 'x' level tracking, or additional levels on request.
+
+// In the settings there is an offset to adjust the levels horizontally, this is to help make it easier to track if the chart has hit prior liquidation positions.
+
+// Inspired/based off 'Mex Rekt Level'
+
+// Config
+offset = input(defval=1, title='bar offset')
+rekt_50x = input.float(defval=0.025, title='50x', step=0.001)
+rekt_25x = input.float(defval=0.05, title='25x', step=0.001)
+rekt_10x = input.float(defval=0.1, title='10x', step=0.001)
+rekt_5x = input.float(defval=0.2, title='5x', step=0.001)
+rekt_3x = input.float(defval=0.33, title='3x', step=0.001)
+
+label_offset_input = input.int(group='Label offsets', title='Rekt level label offset', defval=4, inline='labeloffset', tooltip='It may take a moment for the labels to re-appear after changing this')
+
+short_rekt_entry = (high + close) / 2
+long_rekt_entry = (low + close) / 2
+
+label_x_offset = time_close + label_offset_input * timeframe.multiplier * 60 * 1000
+
+//Right_Label
+r_label(ry, rtext, rstyle, rcolor, valid) =>
+    if valid and barstate.isrealtime
+        rLabel = label.new(x=label_x_offset, y=ry, text=rtext, xloc=xloc.bar_time, style=rstyle, textcolor=rcolor, textalign=text.align_right)
+        label.delete(rLabel[1])
+
+labelRektLevels = input.bool(group='Rekt Level Lines', title='Rekt Level Labels?', defval=false, inline='showlabels', tooltip='It may take a moment for the labels to re-appear after changing this')
+
+_50xColor = input.color(group='Rekt Level Lines', title='50x Color', defval=#f55ce920, inline='rektcolors')
+_25xColor = input.color(group='Rekt Level Lines', title='25x Color', defval=#f55ce951, inline='rektcolors')
+_10xColor = input.color(group='Rekt Level Lines', title='10x Color', defval=#f55ce973, inline='rektcolors')
+_5xColor = input.color(group='Rekt Level Lines', title='5x Color', defval=#f55ce9, inline='rektcolors')
+_3xColor = input.color(group='Rekt Level Lines', title='3x Color', defval=#ff00ee, inline='rektcolors')
+
+_labelPrompt = input.bool(group='Rekt Level Lines', title='Label Prompt?', defval=true, inline='labelprompt', tooltip='This will hide the "label prompt" on the "3x" label. It may take a moment for the labels to re-appear after changing this')
+
+short50x_ = short_rekt_entry * (1 + rekt_50x)
+short25x_ = short_rekt_entry * (1 + rekt_25x)
+short10x_ = short_rekt_entry * (1 + rekt_10x)
+short5x_ = short_rekt_entry * (1 + rekt_5x)
+short3x_ = short_rekt_entry * (1 + rekt_3x)
+
+long50x_ = long_rekt_entry * (1 - rekt_50x)
+long25x_ = long_rekt_entry * (1 - rekt_25x)
+long10x_ = long_rekt_entry * (1 - rekt_10x)
+long5x_ = long_rekt_entry * (1 - rekt_5x)
+long3x_ = long_rekt_entry * (1 - rekt_3x)
+
+plot(short50x_[offset], title='50x', color=color.new(_50xColor, 0), linewidth=1)
+plot(short25x_[offset], title='25x', color=color.new(_25xColor, 0), linewidth=1)
+plot(short10x_[offset], title='10x', color=color.new(_10xColor, 0), linewidth=2)
+plot(short5x_[offset], title='5x', color=color.new(_5xColor, 0), linewidth=2)
+plot(short3x_[offset], title='3x', color=color.new(_3xColor, 0), linewidth=3)
+
+plot(long50x_[offset], title='50x', color=color.new(_25xColor, 0), linewidth=1)
+plot(long25x_[offset], title='25x', color=color.new(_25xColor, 0), linewidth=1)
+plot(long10x_[offset], title='10x', color=color.new(_10xColor, 0), linewidth=2)
+plot(long5x_[offset], title='5x', color=color.new(_5xColor, 0), linewidth=2)
+plot(long3x_[offset], title='3x', color=color.new(_3xColor, 0), linewidth=3)
+
+r_label(short50x_, '50x', label.style_none, _50xColor, labelRektLevels)
+r_label(short25x_, '25x', label.style_none, _25xColor, labelRektLevels)
+r_label(short10x_, '10x', label.style_none, _10xColor, labelRektLevels)
+r_label(short5x_, '5x', label.style_none, _5xColor, labelRektLevels)
+// add an r_label with the prompt text "Labels can be hidden in settings"
+if _labelPrompt
+    r_label(short3x_, '3x || This prompt (and/or Labels) can be hidden \n in the "Liquidation Rekt Levels" settings', label.style_none, _3xColor, labelRektLevels)
+if not _labelPrompt
+    r_label(short3x_, '3x', label.style_none, _3xColor, labelRektLevels)
+
+r_label(long50x_, '50x', label.style_none, _25xColor, labelRektLevels)
+r_label(long25x_, '25x', label.style_none, _25xColor, labelRektLevels)
+r_label(long10x_, '10x', label.style_none, _10xColor, labelRektLevels)
+r_label(long5x_, '5x', label.style_none, _5xColor, labelRektLevels)
+r_label(long3x_, '3x', label.style_none, _3xColor, labelRektLevels)
