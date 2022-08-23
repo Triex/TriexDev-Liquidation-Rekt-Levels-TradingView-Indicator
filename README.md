@@ -16,7 +16,7 @@ _Inspired/initially based off 'Mex Rekt Level'_
 I often have this added to my charts, and toggle visibility when I want to check the liq levels.
 
 Worth noting; the Market Makers often like to move to the longer-timeframe liquidation points when doing a big movement (to wreck as many traders/make as much money as possible), and are prone to flip it in the opposite direction after that. 
-(Why I personally use this as a key indicator at times)
+(Why I personally use liquidation points as a key indicator at times)
 
 ---
 ## Future Updates
