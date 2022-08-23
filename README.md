@@ -13,6 +13,6 @@ _Inspired/initially based off 'Mex Rekt Level'_
 - [ ] Look at adding toggles for each level efficiently
 - [ ] Potential custom leverage 'x' level tracking, or additional levels on request.
 
---
+---
 
 [This Repo is licensed under an MIT License](./LICENSE)
