@@ -1,6 +1,7 @@
 # TriexDev - Liquidation Rekt Levels TradingView Indicator
-[Direct TradingView Script Link](https://www.tradingview.com/script/qI6EuJjG-TriexDev-Liquidation-Rekt-Levels/)
 [![Chart Snapshot](https://www.tradingview.com/x/D44FB7NQ)](https://www.tradingview.com/x/D44FB7NQ)
+
+[Direct TradingView Script Link](https://www.tradingview.com/script/qI6EuJjG-TriexDev-Liquidation-Rekt-Levels/)
 
 A basic indicator which lets you see where positions will be liquidated. Each line is based on default leverage levels typically used for trading. (3x,5x,10x,25x,50x)
 
