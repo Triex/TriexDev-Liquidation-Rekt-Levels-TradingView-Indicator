@@ -2,9 +2,8 @@
 indicator('TriexDev - Liquidation Rekt Levels', overlay=true)
 
 // A basic indicator which lets you see where positions will be liquidated. Each line is based on default leverage levels typically used for trading.
-// Later updates: Look at adding toggles for each level efficiently, potential custom leverage 'x' level tracking, or additional levels on request.
-
-// In the settings there is an offset to adjust the levels horizontally, this is to help make it easier to track if the chart has hit prior liquidation positions.
+// - There is an offset to adjust the levels horizontally, this is to help make it easier to track if the chart has hit prior liquidation positions.
+// - Individual lines can be hidden under the 'Style' tab, colours set in the default tab
 
 // Inspired/based off 'Mex Rekt Level'
 
@@ -67,7 +66,6 @@ r_label(short50x_, '50x', label.style_none, _50xColor, labelRektLevels)
 r_label(short25x_, '25x', label.style_none, _25xColor, labelRektLevels)
 r_label(short10x_, '10x', label.style_none, _10xColor, labelRektLevels)
 r_label(short5x_, '5x', label.style_none, _5xColor, labelRektLevels)
-// add an r_label with the prompt text "Labels can be hidden in settings"
 if _labelPrompt
     r_label(short3x_, '3x || This prompt (and/or Labels) can be hidden \n in the "Liquidation Rekt Levels" settings', label.style_none, _3xColor, labelRektLevels)
 if not _labelPrompt
