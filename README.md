@@ -24,4 +24,8 @@ Worth noting; the Market Makers often like to move to the longer-timeframe liqui
 
 ---
 
+Want to support me doing more free stuff? <a href="https://buymeacoffee.com/Triex">BuyMeACoffee</a>
+
+---
+
 [This Repo is licensed under an MIT License](./LICENSE)
